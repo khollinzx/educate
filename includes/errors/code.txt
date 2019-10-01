@@ -1,0 +1,10 @@
+if(!$user->count()){
+	echo "No User </br>";
+} else {
+	echo "OK </br>";
+
+	foreach ($user->result() as $user) {
+		echo $user->name, " </br>";
+	}
+	
+}
