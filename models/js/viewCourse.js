@@ -1,8 +1,10 @@
 $(document).ready(function () {
     displayLecturer();
     image_loaded();
-    get_course_table();
+    // get_course_table();
     loadDescription();
+    loadContentFile();
+    pdf_upload() 
 
     function displayLecturer() {
         $.ajax({
@@ -13,6 +15,19 @@ $(document).ready(function () {
             }
         });
     }
+
+    function loadContentFile() {
+        var id = $("#editId").val();
+        $.ajax({
+            url: '../../models/controller/loadContentFile.php',
+            type: 'GET',
+            data: { id: id },
+            success: function (html) {
+                $("#viewMaterial").html(html);
+            }
+        });
+    }
+    
 
     function loadDescription() {
         var id = $("#editId").val();
@@ -29,6 +44,8 @@ $(document).ready(function () {
     }
 
     $("#saveUpdate").click(function (e) {
+        var id = $("#viewId").val();
+        var token = $("#viewToken").val();
         $('#editCourseDetails').validate({
             rules: {
                 courseTitle: {
@@ -57,12 +74,13 @@ $(document).ready(function () {
                 },
                 success: function (response) {
                     if (response == 'created') {
-                        loadDescription();
-                        // get_pagination();
+                        // loadDescription();
+                        // // get_pagination();
                         $("#saveUpdate").html('<i class="fa fa-save"></i>&ensp;Submit Log');
                         $("#saveUpdate").attr("disabled", false);
                         $("#editCourseDetails")[0].reset();
                         $(".modal").modal('hide');
+                        window.location.href = "viewCourse.php?id=" + id + "&token=" + token; 
                         Swal({
                             position: 'center',
                             type: 'success',
@@ -202,14 +220,119 @@ $(document).ready(function () {
     });
 
     $("body").on("click", "#opt1", function (evt) {
-        $('#appendment').append('<div class="form-group" id="matOp1"> <label for= "materialContent"> Type The Link Here </label > <input type="url" class="form-control" id="pick1" name="materialContent" placeholder="Enter Link Url"> </div>');
+        $('#appendment').append('<div class="form-group" id="matOp1"> <label for= "materialContent"> Type The Link Here </label > <input type="url" class="form-control" id="links" name="materialContent" value="https://"> </div>');
         $('#matOp2').remove();
 
     });
 
     $("body").on("click", "#opt2", function (evt) {
-        $('#appendment').append('<div class="form-group" id="matOp2"> <label for= "materialContent"> Select the Material </label > <input type="file" class="form-control col-md-12" id="pick2" name="materialContent" style="border:1px solid grey; border-radius: 3px;"> </div>');
+        $('#appendment').append('<div class="form-group" id="matOp2"> <label for= "materialContent"> Select the Material </label > <input type="file" class="form-control col-md-12" name="pdf_file" id="pdf_file" accept="application/pdf" style="border:1px solid grey; border-radius: 3px;"><input type="hidden" class="form-control" name="materialContent"  id="pdf_show"> </div>');
         $('#matOp1').remove();
     });
+
+    function pdf_upload() {
+        $(document).on("change", "#pdf_file", function () {
+            var pdf_property = document.getElementById("pdf_file").files[0];
+            var pdf_name = pdf_property.name;
+            var pdf_extension = pdf_name.split(".").pop().toLowerCase();
+            $("#pdf_show").val(pdf_name);
+            var form_data2 = new FormData();
+            form_data2.append("pdf_file", pdf_property);
+
+            $.ajax({
+                url: "../../models/controller/uploadPdf.php",
+                method: "POST",
+                data: form_data2,
+                contentType: false,
+                cache: false,
+                processData: false
+            });
+        });
+    }
+
+    $("#sendContent").click(function (e) {
+        $('#materialValues').validate({
+            rules: {
+                chapterNo: {
+                    required: true
+                },
+                materialTitle: {
+                    required: true
+                },
+                courseId: {
+                    required: true
+                },
+                opt: {
+                    required: true
+                },
+                materialContent: {
+                    required: true
+                },
+                pdf_file: {
+                    required: true
+                },
+            },
+            messages: {
+                chapterNo: "You are required to fill this field",
+                materialTitle: "You are required to fill this field",
+                opt: "You are required to fill this field",
+                materialContent: "You are required to fill this field",
+                pdf_file: "Please select the PDF file",
+            },
+            submitHandler: submitForm
+        });
+
+        function submitForm() {
+            var data = $("#materialValues").serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../../models/controller/addMaterialValues.php',
+                data: data,
+                beforeSend: function () {
+                    $("#sendContent").html('Submitting Leave..');
+                    $("#sendContent").attr("disabled", true);
+                },
+                success: function (response) {
+                    if (response == 'created') {
+                        loadContentFile();
+                        // loadDescription();
+                        // // get_pagination();
+                        $("#sendContent").html('<i class="fa fa-save"></i>&ensp;Submit Log');
+                        $("#sendContent").attr("disabled", false);
+                        $("#materialValues")[0].reset();
+                        $(".modal").modal('hide');
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: 'Contents Added Successfull',
+                            showConfirmButton: false,
+                            timer: 2500
+                        });
+                    } else {
+                        loadContentFile();
+                        // loadDescription();
+                        // get_pagination();
+                        $("#sendContent").html('<i class="fa fa-save"></i>&ensp;Submit Log');
+                        $("#sendContent").attr("disabled", false);
+                        $("#materialValues")[0].reset();
+                        $(".modal").modal('hide');
+                        Swal({
+                            type: 'error',
+                            title: response,
+                            text: 'Please go add your Referral Code on your profile',
+                        })
+                        // toastr.error(response,'Dange Alert',{timeOut:20000});
+                    }
+                }
+            });// ends create ajax 
+        }
+
+    });
+
+
+
+
+
+
 
 });

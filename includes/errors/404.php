@@ -1,6 +1,6 @@
 <?php 
 
-require_once($_SERVER["DOCUMENT_ROOT"]."/fundscheme/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"]."/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -20,3 +20,6 @@ include(ROOT_PATH . 'inc/header.php');
             </div>
           </div>
         </div>
+<?php
+include(ROOT_PATH . 'inc/footer.php');
+?>

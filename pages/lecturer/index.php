@@ -1,10 +1,12 @@
 <?php
 $pagetitle = "home";
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
 include(ROOT_PATH . 'inc/header.php');
+
+include(ROOT_PATH . 'inc/logindetails.php');
 
 include(ROOT_PATH . 'inc/topnav.php');
 

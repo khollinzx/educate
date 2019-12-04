@@ -26,7 +26,7 @@
                                 Courses
                             </a>
 
-                            <a href="#" class="list-group-item ">
+                            <a href=" <?php echo BASE_URL; ?>logout.php" class="list-group-item ">
                                 <i class="fa fa-power-off"></i>
                                 Logout
                             </a>

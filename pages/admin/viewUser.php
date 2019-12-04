@@ -2,7 +2,7 @@
 
 $r = 7;
 $pagetitle = "dashboard";
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -13,13 +13,22 @@ include(ROOT_PATH . 'inc/topnav.php');
 include(ROOT_PATH . 'inc/admin/menus.php');
 
 // createTable('com442', 'courseId', 'courseCode', 'matname', 'matfile', 'tokenId');
-// if (isset($_GET["tokenId"]) && isset($_GET["id"])) {
+if (isset($_GET["tokenId"]) && isset($_GET["id"])) {
 
-//     $Number = $_GET["tokenId"];
-//     $key = $_GET["id"];
-// }
+    $tokenId = $_GET["tokenId"];
+    $key = $_GET["id"];
+}
 // echo $Number;
 // echo $key;
+$variable = SelectList("users", "token_Id", $tokenId);
+
+foreach ($variable as $value) {
+    $firstName = $value["firstName"];
+    $lastName = $value["lastName"];
+    $email = $value["email"];
+    $phoneNo = $value["phoneNumber"];
+    $Role = selectField2("roles", "name", "id", $value["role_id"]);
+}
 ?>
 
 <div class="col-md-9">
@@ -42,8 +51,7 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                                     FIRSTNAME:
                                 </span><!-- /.username -->
                                 <span class="col-md-9">
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                                    <?php echo $firstName; ?>
                                 </span>
                             </div>
                             <!-- /.comment-text -->
@@ -55,8 +63,7 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                                     LASTNAME:
                                 </span><!-- /.username -->
                                 <span class="col-md-9">
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                                    <?php echo $lastName; ?>
                                 </span>
                             </div>
                             <!-- /.comment-text -->
@@ -68,8 +75,7 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                                     EMAIL:
                                 </span><!-- /.username -->
                                 <span class="col-md-9">
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                                    <?php echo $email; ?>
                                 </span>
                             </div>
                             <!-- /.comment-text -->
@@ -81,8 +87,19 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                                     PHONE NUMBER:
                                 </span><!-- /.username -->
                                 <span class="col-md-9">
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
+                                    <?php echo $Role; ?>
+                                </span>
+                            </div>
+                            <!-- /.comment-text -->
+                        </div>
+                        <div class="box-comment">
+
+                            <div class="comment-text row">
+                                <span class="username col-md-3">
+                                    PHONE NUMBER:
+                                </span><!-- /.username -->
+                                <span class="col-md-9">
+                                    <?php echo $phoneNo; ?>
                                 </span>
                             </div>
                             <!-- /.comment-text -->
@@ -95,7 +112,7 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                     <!-- Profile Image -->
                     <div class="">
                         <div class="">
-                            <img style="height:120px; width:1500px" class="profile-user-img img-responsive" src="<?php echo BASE_URL;?>assets/dist/img/user4-128x128.jpg" alt="User profile picture">
+                            <img style="height:120px; width:1500px" class="profile-user-img img-responsive" src="<?php echo BASE_URL; ?>assets/dist/img/user4-128x128.jpg" alt="User profile picture">
 
                         </div>
                         <!-- /.box-body -->

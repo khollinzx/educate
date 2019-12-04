@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -34,7 +34,7 @@ if ($variable != null) {
         $json[] = [
             // "serial_no"                        =>$i,
             "id"                         => $row["id"],
-            "courseTitle"                   => strtoupper($row["courseTitle"]),
+            "courseTitle"                   => substr(strtoupper($row["courseTitle"]),0,10)."....",
             "image"                       => $row["image"],
             // "user_id"                  => $name1 . ' ' . $name2,
             "duration"                    => $row["duration"],

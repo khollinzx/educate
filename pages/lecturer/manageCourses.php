@@ -1,21 +1,21 @@
 <?php
 
-$r = 7;
+$userid = 4;
 $pagetitle = "settings";
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
 include(ROOT_PATH . 'inc/header.php');
 
+include(ROOT_PATH . 'inc/logindetails.php');
+
 include(ROOT_PATH . 'inc/topnav.php');
 
 include(ROOT_PATH . 'inc/lecturer/menus.php');
 
-// createTable('com442', 'courseId', 'courseCode', 'matname', 'matfile', 'tokenId');
-
 ?>
-
+<input type="text" id="userId" value="<?php echo $userid; ?>" hidden>
 <div class="col-md-9">
     <!-- jQuery Knob -->
     <div class="box box-solid">
@@ -29,11 +29,12 @@ include(ROOT_PATH . 'inc/lecturer/menus.php');
             <table class="table table-hover">
                 <thead>
                     <tr role="row">
-                        <th class="text-center">Course Title</th>
-                        <th class="text-center">Duration</th>
-                        <th class="text-center">Lecture</th>
-                        <th class="text-center">Status</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-left">S/N</th>
+                        <th class="text-left">Course Title</th>
+                        <th class="text-left">Duration</th>
+                        <th class="text-left">Lecture Name</th>
+                        <th class="text-left">Status</th>
+                        <th class="text-left">Actions</th>
                     </tr>
                 </thead>
                 <tbody id="courseTableContent">
@@ -45,7 +46,7 @@ include(ROOT_PATH . 'inc/lecturer/menus.php');
     </div>
     <!-- /.box -->
 </div>
-<script type="text/javascript" src="<?php echo BASE_URL; ?>models/js/updatePassword.js"></script>
+<script type="text/javascript" src="<?php echo BASE_URL; ?>models/js/manageCourses.js"></script>
 <?php
 include(ROOT_PATH . 'inc/footer.php');
 ?>

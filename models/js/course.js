@@ -33,18 +33,22 @@ $(document).ready(function () {
                 courseTitle: {
                     required: true
                 },
+                courseCode: {
+                    required: true
+                },
                 duration: {
                     required: true
                 },
                 assignedLecturer: {
                     required: true
                 },
-                img_show: {
+                img_file: {
                     required: true
                 }
             },
             messages: {
                 courseTitle: "You are required to fill this field",
+                courseCode: "You are required to fill this field",
                 duration: "You are required to fill this field",
                 assignedLecturer: "You are required to select a field",
                 img_file: "You are required to fill this field",
@@ -175,9 +179,13 @@ $(document).ready(function () {
         var row = '';
         $.each(data, function (key, value) {
             row += '<tr>';
-            row += '<td class="text-center upper">' + value.courseTitle + '</td>';
-            row += '<td class="text-center upper">' + value.duration + '</td>';
-            row += '<td class="text-center upper">' + value.user_id + '</td>';
+            row += '<td class="text-left upper">' + value.courseTitle + '</td>';
+            if(value.duration >= 2){
+                row += '<td class="text-center upper">' + value.duration + ' Months </td>';
+            }else{
+                row += '<td class="text-center upper">' + value.duration + ' Month </td>';
+            }
+            row += '<td class="text-left upper">' + value.user_id + '</td>';
             row += '<td class="text-center upper">';
             if (value.status == 1) {
                 row += '<span class="label label-success">active</span>';

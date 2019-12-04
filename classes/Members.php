@@ -47,7 +47,19 @@ class Members {
 			}
 		}
 		return false;
-	} 
+	}
+
+	// public function checkAnswer($table, $fields, $id){
+	// 	if (!$this->_db->answer($table, $fields, $id)) {
+	// 		throw new Exception('There was a problem creating an account!.');
+	// 	}
+	// }
+
+	public function checkAnswer($data, $id)
+	{
+		$value = $this->_db->answer($data, $id);
+		return $value;
+	}
 
 	public function exists() {
 		return (!empty($this->_data)) ? true : false;

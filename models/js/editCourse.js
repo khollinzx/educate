@@ -74,10 +74,67 @@ $(document).ready(function () {
 
 
 
-    $("body").on("click", "#saveUpdate", function () {
-        var id = $("#editDescription").val();
+    $("#saveUpdate").click(function (e) {
+        var id = $("#viewId").val();
+        var token = $("#viewToken").val();
+        $('#editCourseDetails').validate({
+            rules: {
+                courseTitle: {
+                    required: true
+                },
+                editDescription: {
+                    required: true
+                }
+            },
+            messages: {
+                courseTitle: "You are required to fill this field",
+                editDescription: "You are required to fill this field",
+            },
+            submitHandler: submitForm
+        });
 
-        alert(id);
+        function submitForm() {
+            var data = $("#editCourseDetails").serialize();
+            $.ajax({
+                type: 'POST',
+                url: '../../models/controller/editCourseDetails.php',
+                data: data,
+                beforeSend: function () {
+                    $("#saveUpdate").html('Submitting Leave..');
+                    $("#saveUpdate").attr("disabled", true);
+                },
+                success: function (response) {
+                    if (response == 'created') {
+                        // loadDescription();
+                        // // get_pagination();
+                        $("#saveUpdate").html('<i class="fa fa-save"></i>&ensp;Submit Log');
+                        $("#saveUpdate").attr("disabled", false);
+                        $("#editCourseDetails")[0].reset();
+                        $(".modal").modal('hide');
+                        Swal({
+                            position: 'center',
+                            type: 'success',
+                            title: 'Registration Successfull',
+                            showConfirmButton: false,
+                            timer: 3000
+                        });
+                        window.location.href = "viewCourse.php?id=" + id + "&token=" + token;
+                    } else {
+                        // get_pagination();
+                        $("#saveUpdate").html('<i class="fa fa-save"></i>&ensp;Create');
+                        $("#saveUpdate").attr("disabled", false);
+                        $("#editCourseDetails")[0].reset();
+                        $(".modal").modal('hide');
+                        Swal({
+                            type: 'error',
+                            title: response,
+                            text: 'Please go add your Referral Code on your profile',
+                        })
+                        // toastr.error(response,'Dange Alert',{timeOut:20000});
+                    }
+                }
+            });// ends create ajax 
+        }
 
     });
 

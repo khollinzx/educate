@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -15,7 +15,7 @@ if (isset($_GET["page"])) {
 $start_from = ($page - 1) * $record_per_page;
 
 
-$variable = selectList('users', 'role_id', 3);
+$variable = selectList('users', 'role_id', 6);
 
 
 if ($variable != null) {

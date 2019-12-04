@@ -1,12 +1,14 @@
 <?php
 
 $r = 7;
-$pagetitle = "view course";
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+$pagetitle = "home";
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
 include(ROOT_PATH . 'inc/header.php');
+
+include(ROOT_PATH . 'inc/logindetails.php');
 
 include(ROOT_PATH . 'inc/topnav.php');
 
@@ -25,6 +27,7 @@ $values = selectCourseElements('courses', $key, $Number);
 
 foreach ($values as $value) {
     $courseTitle = $value["courseTitle"];
+    $courseCode = $value["courseCode"];
     $image = $value["image"];
     $duration = $value["duration"];
     $courseId = $value["id"];
@@ -46,22 +49,24 @@ foreach ($values as $value) {
         <div class="box-body">
             <div class="row">
                 <div class="col-md-12">
-                    <input type="text" id="editId" value="<?php echo $courseId; ?>">
+                    <input type="tebox-widgetxt" hidden id="editId" value="<?php echo $courseId; ?>">
                     <input type="text" hidden id="editToken" value="<?php echo $courseToken; ?>">
                     <!-- Widget: user widget style 1 -->
-                    <div class="box box-widget widget-user">
+                    <div class="box  widget-user">
                         <!-- Add the bg color to the header using any of the bg-* classes -->
                         <div class="widget-user-header bg-black" style="background: url('<?php echo BASE_URL; ?>uploads/images/<?php echo $image; ?>') center center no-repeat;">
                             <h3 class="widget-user-username"><b><?php echo strtoupper($courseTitle); ?></b></h3>
 
-                            <span><i><?php echo $duration; ?></i></span>
+                            <span><i><b><?php echo strtoupper($courseCode); ?></b></i></span>
                         </div>
                         <div class=" box-footer">
                             <div class="row">
                                 <div class="col-md-12">
                                     <div style="margin-bottom:3%;margin-top:3%;" class="box-tools pull-right">
                                         <div class="col-md-2">
-                                            <button class="btn btn-tool" data-target="#editCourse" data-toggle="modal"><i class="fa fa-edit"></i>
+                                            <!-- <button type="submit" class="btn btn-tool" data-target="#editCourse" data-toggle="modal"><i class="fa fa-edit"></i>
+                                            </button> -->
+                                            <button type="submit" class="btn btn-tool" id="editPage"><i class="fa fa-edit"></i>
                                             </button>
                                         </div>
                                     </div>
@@ -75,6 +80,21 @@ foreach ($values as $value) {
                                                 <span class="col-md-7">
                                                     <div id="loadDescription">
 
+                                                    </div>
+
+                                                </span>
+                                                <span class="username col-md-3">
+                                                    Duration:
+                                                </span><!-- /.username -->
+                                                <span class="col-md-7">
+                                                    <div>
+                                                        <span>
+                                                            <?php if ($duration >= 2) {
+                                                                echo $duration . " Months";
+                                                            } else {
+                                                                echo $duration . " Month";
+                                                            } ?>
+                                                        </span>
                                                     </div>
                                                 </span>
                                             </div>
@@ -100,33 +120,8 @@ foreach ($values as $value) {
                                                 <span class="username col-md-3">
                                                     Course Materials:
                                                 </span><!-- /.username -->
-                                                <span class="col-md-7 col-lg-6">
-                                                    <?php
-                                                    for ($k = 1; $k <= $r; $k++) {
-                                                        echo '<div class="box collapsed-box">
-                                                        <div class="box-header">
-                                                            <div class="box-tools pull-left">
-                                                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-plus"></i>
-                                                                </button>
-                                                            </div>
-                                                            <h3 class="box-title">Topic ' . $k . ': Introduction to Psychology</h3>
-                                                            <!-- /.box-tools -->
-                                                        </div>
-                                                        <!-- /.box-header -->
-                                                        <div class="box-body">
-                                                            <div class="row">
-                                                                <span class="col-md-8">
-                                                                    <p><a href="#">materials name</a></p>
-                                                                </span>
-                                                                <span class="col-md-2 pull-right">
-                                                                    <button class="btn btn-xs btn-default"><i class="fa fa-edit"></i></button>
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                        <!-- /.box-body -->
-                                                    </div>';
-                                                    }
-                                                    ?>
+                                                <span class="col-md-7 col-lg-7" id="viewMaterial">
+
                                                 </span>
                                             </div>
                                             <!-- /.comment-text -->
@@ -159,14 +154,37 @@ foreach ($values as $value) {
                     <h4 class="modal-title">Add Material/ Content</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="createUser" role="form">
+                    <form id="materialValues" role="form">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="firstName">Material Title</label>
-                                    <input type="text" class="form-control" name="firstName" id="firstName" placeholder="Enter First Name">
-                                    <input type="text" value="<?php echo $courseId; ?>">
-                                    <input type="text" value="<?php echo $courseToken; ?>">
+                                    <label for="chapterNo">Chapter</label>
+                                    <select type="text" class="form-control" name="chapterNo" id="chapterNo">
+                                        <option value="">~~ Select Chapter ~~</option>
+                                        <option value="1"> Chapter One </option>
+                                        <option value="2"> Chapter Two </option>
+                                        <option value="3"> Chapter Three </option>
+                                        <option value="4"> Chapter Four </option>
+                                        <option value="5"> Chapter Five </option>
+                                        <option value="6"> Chapter Six </option>
+                                        <option value="7"> Chapter Seven </option>
+                                        <option value="8"> Chapter Eight </option>
+                                        <option value="9"> Chapter Nine </option>
+                                        <option value="10"> Chapter Ten </option>
+                                        <option value="11"> Chapter Eleven </option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="filelName">Material Title</label>
+                                    <input type="text" class="form-control" name="materialTitle" id="materialTitle" placeholder="ex. Information Technology">
+                                    <input type="text" hidden id="courseId" name="courseId" value="<?php echo $courseId; ?>">
+                                    <input type="text" hidden id="courseToken" name="courseToken" value="<?php echo $courseToken; ?>">
                                 </div>
                             </div>
                         </div>
@@ -179,21 +197,21 @@ foreach ($values as $value) {
                         </div>
                         <div class="form-group">
                             <div class="radio">
-                                <label>
-                                    <input type="radio" name="opt" id="opt1" value="0">
+                                <label class="radio-inline">
+                                    <input type="radio" name="opt" id="opt1" value="1">
                                     Upload Link
                                 </label>
                             </div>
                             <div class="radio">
-                                <label>
-                                    <input type="radio" name="opt" id="opt2" value="1">
+                                <label class="radio-inline">
+                                    <input type="radio" name="opt" id="opt2" value="2">
                                     Upload Material
                                 </label>
                             </div>
                         </div>
 
                         <div class="modal-footer">
-                            <button type="submit" id="send" class="btn btn-default">Add Content</button>
+                            <button type="submit" id="sendContent" class="btn btn-default">Add Content</button>
                         </div>
                     </form>
                 </div>
@@ -227,7 +245,6 @@ foreach ($values as $value) {
                                         <label for="courseTitle">Course Description</label>
                                         <textarea id="editDescription" name="editDescription" class="form-control textarea" placeholder="Place some text here" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;">
                                         </textarea>
-                                        <input type="text" id="txtinput">
                                     </div>
                                 </div>
 

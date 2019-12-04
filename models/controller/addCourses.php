@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -13,6 +13,7 @@ if (Input::exists()) {
         $_POST,
         array(
             "courseTitle"                     => array('required' => true),
+            "courseCode"                     => array('required' => true),
             "duration"                 => array('required' => true),
             "assignedLecturer"                 => array('required' => true),
             "img_show"                 => array('required' => true)
@@ -26,6 +27,7 @@ if (Input::exists()) {
         try {
             $members->create('courses', array(
                 "courseTitle"                     =>    Input::get('courseTitle'),
+                "courseCode"                     =>    Input::get('courseCode'),
                 "duration"                 =>    Input::get('duration'),
                 "user_id"                 =>    Input::get('assignedLecturer'),
                 "image"                 =>    Input::get('img_show'),

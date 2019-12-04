@@ -1,0 +1,11 @@
+function loadContentFile() {
+        var id = $("#editId").val();
+        $.ajax({
+            url: '../../models/controller/loadContentFile.php',
+            type: 'GET',
+            data: {id: id},
+            success: function (html) {
+                $("#viewMaterial").html(html);
+            }
+        });
+    }

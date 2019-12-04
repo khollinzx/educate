@@ -2,7 +2,7 @@
     <nav class="navbar navbar-static-top">
         <div class="container">
             <div class="navbar-header">
-                <a href="../../index2.html" class="navbar-brand"><b><?php echo SITE_NAME;?></b></a>
+                <a href="../../index2.html" class="navbar-brand"><b><?php echo SITE_NAME; ?></b></a>
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
                     <i class="fa fa-bars"></i>
                 </button>
@@ -12,11 +12,9 @@
             <div class="collapse navbar-collapse pull-right" id="navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">#Username <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $fullname; ?> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Profile</a></li>
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">logout</a></li>
+                            <li><a href="<?php echo BASE_URL; ?>logout.php">logout</a></li>
                         </ul>
                     </li>
                 </ul>

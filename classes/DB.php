@@ -87,6 +87,31 @@ class DB {
 		return false;
 	}
 
+	public function answer($data, $id){
+		$ans=implode("",$data);
+		$right=0;
+		$wrong=0;
+		$no_answer=0;
+		// $sql = $this->_pdo->query("SELECT `id`,`q_ans` FROM `question` WHERE `course_id`={$id}");
+		$sql=$this->_pdo->query("SELECT `id`,`q_ans` FROM `questions` WHERE `course_id`={$id}");
+		$result = $sql->fetchAll(PDO::FETCH_ASSOC);
+		// print_r($result);
+		foreach($result as $results){
+			if($results['q_ans']==$_POST[$results['id']]){
+				$right++;
+			}elseif($_POST== "no_attempt"){
+				$no_answer++;
+			}else{
+				$wrong++;
+			}
+		}
+		$array=array();
+		$array['right']=$right;
+		$array['wrong'] = $wrong;
+		$array['no_answer'] = $no_answer;
+		return $array;
+	}
+
 	// public function update($table, $point, $fields, $id){
 	// 	$set = '';
 	// 	$x = 1;

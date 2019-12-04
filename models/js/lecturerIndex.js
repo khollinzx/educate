@@ -139,7 +139,7 @@ $(document).ready(function () {
 
 
     function get_course_table(page) {
-        var id = $("#lecturerId").val()
+        var id = $("#lecturerId").val();
         $.ajax({
             url: '../../models/controller/getLecturerCourses.php',
             type: 'GET',
@@ -183,7 +183,11 @@ $(document).ready(function () {
             row += '<div class="caption">';
             // button part
             row += '<h3 class="text-center"><b>'+ value.courseTitle +'</b></h3>';
-            row += '<p class="text-center">' + value.duration + '</p>';
+            if(value.duration >= 2){
+                row += '<p class="text-center">' + value.duration + ' Months </p>';
+            }else{
+                row += '<p class="text-center">' + value.duration + ' Month </p>';
+            }
             row += '<p><a href="viewCourse.php?id='+ value.id +'&amp;token='+ value.tokenId +'" class="btn btn-block btn-flat btn-lg btn-primary" role="button">View Course</a> </p>';
             row += '</div>';
             row += '</div>';

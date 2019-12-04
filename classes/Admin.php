@@ -46,8 +46,8 @@ class Admin {
 
 	public function find($user = null) {
 		if($user) {
-			$field = (is_numeric($user)) ? 'id' : 'username';
-			$data = $this->_db->get('login_table', array($field, '=', $user));
+			$field = (is_numeric($user)) ? 'id' : 'email';
+			$data = $this->_db->get('users', array($field, '=', $user));
 
 			if($data->count()) {
 				$this->_data = $data->first();
@@ -110,7 +110,7 @@ class Admin {
 	}
 
 	public function logout() {
-		$this->_db->delete('user_session', array('user_id','=',$this->data()->id));
+		$this->_db->delete('logs', array('user_id','=',$this->data()->id));
 
 		Session::delete($this->_sessionName);
 		Cookie::delete($this->_cookieName);

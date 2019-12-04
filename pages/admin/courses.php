@@ -2,7 +2,7 @@
 
 $r = 7;
 $pagetitle = "courses";
-require_once($_SERVER["DOCUMENT_ROOT"] . "/educate/constant/config.php");
+require_once($_SERVER["DOCUMENT_ROOT"] . "/constant/config.php");
 
 require_once(ROOT_PATH . 'core/init.php');
 
@@ -87,7 +87,19 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="duration">Duration</label>
-                                <input type="text" class="form-control" name="duration" id="duration" placeholder="Enter Last Name">
+                                <select type="text" class="form-control" name="duration" id="duration">
+                                    <option value="">~~Select Duration~~</option>
+                                    <option value="1">One Month</option>
+                                    <option value="2">Two Month</option>
+                                    <option value="3">Three Month</option>
+                                    <option value="4">Four Month</option>
+                                    <option value="5">Five Month</option>
+                                    <option value="6">Six Month</option>
+                                    <option value="7">Seven Month</option>
+                                    <option value="8">Eight Month</option>
+                                    <option value="9">Nine Month</option>
+                                    <option value="10">Ten Month</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -100,6 +112,12 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                                 </select>
                             </div>
                         </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="courseCode">Course Code</label>
+                                <input type="text" class="form-control" name="courseCode" id="courseCode" placeholder="ex: KSM212">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="row">
@@ -107,6 +125,7 @@ include(ROOT_PATH . 'inc/admin/menus.php');
                             <div class="form-group">
                                 <label for="img_file" class="btn btn-primary "><i class="fa fa-upload"> </i> Upload Photo</label>
                                 <input style="display:none" type="file" id="img_file" name="img_file"><br />
+                                <i style="color:red">Image is Require *</i>
                                 <input type="text" id="img_show" name="img_show" hidden>
                             </div>
                         </div>
